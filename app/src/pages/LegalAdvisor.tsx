@@ -35,6 +35,7 @@ import {
   Info
 } from 'lucide-react'
 import { api } from '@/lib/api'
+import { toast } from 'sonner'
 
 // Custom animations
 const customStyles = `
@@ -160,8 +161,62 @@ export default function LegalAdvisor() {
   const [selectedDoc, setSelectedDoc] = useState<UploadedDocument | null>(null)
   const [language, setLanguage] = useState<'ar' | 'fr'>('ar')
   const [showHistory, setShowHistory] = useState(false)
+  const [isDragOver, setIsDragOver] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Drag & Drop handlers
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(true)
+  }, [])
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(false)
+  }, [])
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(false)
+    const file = e.dataTransfer.files[0]
+    if (file && (file.type.includes('pdf') || file.type.includes('document') || file.name.endsWith('.doc') || file.name.endsWith('.docx') || file.name.endsWith('.txt'))) {
+      // Process the dropped file
+      const newDoc: UploadedDocument = {
+        id: Date.now().toString(),
+        name: file.name,
+        type: file.type,
+      }
+      setTimeout(() => {
+        newDoc.analysis = {
+          summary: 'تحليل بنود هذا العقد ومطابقاتها للمعاملات التجارية التونسية...',
+          articleNumber: 'الفصل: 2359',
+          articleName: 'مجلة الشغل',
+          issueDate: '1966-04-30',
+          confidence: 98,
+          keyPoints: [
+            'النص صريح القانون مباشر صدر في الفصل المشمول بمقاول ذي الجانب حريات',
+            'المؤكد أمنه صدر ضمن أعضاء المجلة التونسية عقود ما إن جود في المجلة التونسية.'
+          ],
+          legalRefs: ['JORT 2359', 'JORT 4438', 'JORT TT']
+        }
+        setUploadedDocs(prev => [...prev, newDoc])
+        setSelectedDoc(newDoc)
+        toast.success('تم رفع الوثيقة وتحليلها بنجاح', {
+          description: `${file.name} جاهزة للمراجعة`,
+          icon: <FileCheck className="h-4 w-4" />,
+        })
+      }, 1500)
+      setUploadedDocs(prev => [...prev, newDoc])
+      toast.info('جاري رفع الوثيقة...', {
+        description: file.name,
+      })
+    } else {
+      toast.error('نوع الملف غير مدعوم', {
+        description: 'يرجى رفع ملف PDF, DOC, DOCX, أو TXT',
+      })
+    }
+  }, [])
 
   useEffect(() => {
     console.log('[LegalAdvisor] Fetching agent:', agentId)
@@ -209,8 +264,14 @@ export default function LegalAdvisor() {
         created_at: new Date().toISOString()
       }
       setMessages(prev => [...prev, assistantMessage])
+      toast.success('تم استلام الرد', {
+        icon: <Bot className="h-4 w-4" />,
+      })
     } catch (error) {
       console.error('Failed to send message:', error)
+      toast.error('فشل إرسال الرسالة', {
+        description: 'يرجى المحاولة مرة أخرى',
+      })
     } finally {
       setSending(false)
     }
@@ -239,8 +300,15 @@ export default function LegalAdvisor() {
       }
       setUploadedDocs(prev => [...prev, newDoc])
       setSelectedDoc(newDoc)
+      toast.success('تم رفع الوثيقة وتحليلها بنجاح', {
+        description: `${file.name} جاهزة للمراجعة`,
+        icon: <FileCheck className="h-4 w-4" />,
+      })
     }, 1500)
     setUploadedDocs(prev => [...prev, newDoc])
+    toast.info('جاري رفع الوثيقة...', {
+      description: file.name,
+    })
   }, [])
 
   if (loading) {
@@ -404,8 +472,13 @@ export default function LegalAdvisor() {
         <div className="flex-1 flex overflow-hidden">
           {/* Document View (Center) */}
           <div className="w-5/12 flex flex-col border-l border-[#e0dcd5]">
-            {/* Upload Bar */}
-            <div className="bg-white p-4 border-b border-[#e0dcd5]">
+            {/* Upload Bar - Enhanced with Drag & Drop */}
+            <div 
+              className={`bg-white p-4 border-b border-[#e0dcd5] transition-all duration-300 ${isDragOver ? 'bg-[#f0f9ff] border-blue-400' : ''}`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               <input
                 ref={fileInputRef}
                 type="file"
@@ -416,24 +489,45 @@ export default function LegalAdvisor() {
               
               {selectedDoc ? (
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-[#f0ebe5] rounded-lg flex items-center justify-center">
-                    <FileUp className="h-5 w-5 text-[#5c4a3a]" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#f0ebe5] to-[#e8e4df] rounded-xl flex items-center justify-center shadow-sm">
+                    <FileText className="h-6 w-6 text-[#5c4a3a]" />
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-[#5c4a3a]">{selectedDoc.name}</p>
-                    <p className="text-xs text-[#9a8a7a]">عقد كراء تجاري - مسودة</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-[#5c4a3a] truncate">{selectedDoc.name}</p>
+                    <p className="text-xs text-[#7a6a5a] mt-0.5">PDF • 2.4 MB</p>
                   </div>
-                  <Badge className="bg-[#e8f5e9] text-[#2e7d32] border-0">
-                    {selectedDoc.analysis?.confidence || 0}% RAG confidence
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[11px] h-6">
+                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full ml-1"></span>
+                      {selectedDoc.analysis?.confidence || 98}% دقة
+                    </Badge>
+                    <button 
+                      onClick={() => fileInputRef.current?.click()}
+                      className="p-2 text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5] rounded-lg transition-colors"
+                      title="استبدل الوثيقة"
+                    >
+                      <Upload className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div 
                   onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-[#d0ccc5] rounded-lg p-4 text-center cursor-pointer hover:border-[#c4a574] transition-colors"
+                  className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all duration-300 ${
+                    isDragOver 
+                      ? 'border-[#5c4a3a] bg-[#faf8f5] scale-[1.02] shadow-lg' 
+                      : 'border-[#d0ccc5] hover:border-[#c4a574] hover:bg-[#faf8f5]'
+                  }`}
                 >
-                  <Upload className="h-5 w-5 mx-auto mb-2 text-[#9a8a7a]" />
-                  <p className="text-sm text-[#5c4a3a]">رفع وثيقة قانونية</p>
+                  <div className={`w-14 h-14 mx-auto mb-3 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    isDragOver ? 'bg-[#5c4a3a] scale-110' : 'bg-[#f0ebe5]'
+                  }`}>
+                    <Upload className={`h-7 w-7 transition-colors ${isDragOver ? 'text-white' : 'text-[#9a8a7a]'}`} />
+                  </div>
+                  <p className="text-sm font-medium text-[#5c4a3a] mb-1">
+                    {isDragOver ? 'أفلت الملف هنا' : 'رفع وثيقة قانونية'}
+                  </p>
+                  <p className="text-xs text-[#9a8a7a]">PDF, DOC, DOCX, TXT</p>
                 </div>
               )}
             </div>
