@@ -578,7 +578,28 @@ export default function LegalAdvisor() {
                               ? 'bg-gradient-to-br from-[#5c4a3a] to-[#4a3a2a] text-white rounded-tr-sm' 
                               : 'bg-white text-[#4a3a2a] rounded-tl-sm border border-[#e8e4df]'
                           }`}>
-                            <p className="leading-relaxed whitespace-pre-wrap">{m.content}</p>
+                            <div className="leading-relaxed whitespace-pre-wrap prose prose-sm max-w-none">
+                              {m.content.split('\n').map((line, i) => (
+                                <span key={i}>
+                                  {line.startsWith('**') && line.endsWith('**') ? (
+                                    <strong className="text-inherit">{line.slice(2, -2)}</strong>
+                                  ) : line.startsWith('- ') ? (
+                                    <span className="flex items-start gap-2">
+                                      <span className="mt-2 w-1 h-1 rounded-full bg-current flex-shrink-0" />
+                                      <span>{line.slice(2)}</span>
+                                    </span>
+                                  ) : line.match(/^\d+\./) ? (
+                                    <span className="flex items-start gap-2">
+                                      <span className="font-bold flex-shrink-0">{line.match(/^\d+/)?.[0]}.</span>
+                                      <span>{line.replace(/^\d+\.\s*/, '')}</span>
+                                    </span>
+                                  ) : (
+                                    line
+                                  )}
+                                  {i < m.content.split('\n').length - 1 && <br />}
+                                </span>
+                              ))}
+                            </div>
                             
                             {/* Message Actions */}
                             <div className={`flex items-center gap-1 mt-2 pt-2 border-t ${m.role === 'user' ? 'border-white/20' : 'border-[#e8e4df]'} opacity-0 group-hover:opacity-100 transition-opacity`}>
