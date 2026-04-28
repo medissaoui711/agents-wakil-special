@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router'
 import Home from './pages/Home'
 import AgentProfile from './pages/AgentProfile'
 import Chat from './pages/Chat'
+import LegalAdvisor from './pages/LegalAdvisor'
 import Dashboard from './pages/Dashboard'
 import Search from './pages/Search'
 import Matches from './pages/Matches'
@@ -17,6 +18,7 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/agent/:handle" element={<AgentProfile />} />
       <Route path="/chat/:agentId" element={<Chat />} />
+      <Route path="/legal/:agentId" element={<LegalAdvisor />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/search" element={<Search />} />
       <Route path="/matches" element={<Matches />} />

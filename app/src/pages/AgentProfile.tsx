@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ArrowRight, MapPin, Briefcase, Tag, MessageCircle, Calendar, Shield } from 'lucide-react'
+import { ArrowRight, MapPin, Briefcase, Tag, MessageCircle, Calendar, Shield, Scale } from 'lucide-react'
 
 interface Agent {
   id: number | string
@@ -221,6 +221,15 @@ export default function AgentProfile() {
                 >
                   <MessageCircle className="w-4 h-4" />
                   فتح أدوات واتساب
+                </Button>
+              ) : agent.tags?.some(t => ['legal', 'law', 'قانون', 'محامي', 'مستشار قانوني'].includes(t.toLowerCase())) ? (
+                <Button 
+                  className="flex-1 gap-2 bg-amber-700 hover:bg-amber-800" 
+                  size="lg"
+                  onClick={() => navigate(`/legal/${agent?.id}`)}
+                >
+                  <Scale className="w-4 h-4" />
+                  استشارة قانونية
                 </Button>
               ) : (
                 <Button 
