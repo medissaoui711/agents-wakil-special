@@ -36,6 +36,74 @@ import {
 } from 'lucide-react'
 import { api } from '@/lib/api'
 
+// Custom animations
+const customStyles = `
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.message-bubble {
+  transition: all 0.2s ease;
+}
+
+.message-bubble:hover {
+  transform: translateY(-1px);
+}
+
+.typing-dot {
+  animation: bounce 1.4s ease-in-out infinite both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+`
+
 interface Agent {
   id: number
   handle: string
@@ -211,7 +279,9 @@ export default function LegalAdvisor() {
   const usingFallback = !agent
 
   return (
-    <div className="h-screen flex bg-[#f5f3f0]" dir="rtl">
+    <>
+      <style>{customStyles}</style>
+      <div className="h-screen flex bg-[#f5f3f0]" dir="rtl">
       {/* Sidebar - Dark Green */}
       <div className="w-72 bg-[#1a2f1a] text-[#e8e4df] flex flex-col">
         {/* Logo */}
@@ -735,5 +805,6 @@ export default function LegalAdvisor() {
         </div>
       </div>
     </div>
-  )
+    </>
+  );
 }
