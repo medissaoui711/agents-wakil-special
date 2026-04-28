@@ -159,8 +159,9 @@ const SIDEBAR_ITEMS = [
 ]
 
 export default function LegalAdvisor() {
+  console.log('[LegalAdvisor] Component starting...')
   const { agentId } = useParams<{ agentId: string }>()
-  console.log('[LegalAdvisor] Rendering with agentId:', agentId)
+  console.log('[LegalAdvisor] agentId:', agentId)
   
   const [agent, setAgent] = useState<Agent | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
@@ -407,11 +408,13 @@ export default function LegalAdvisor() {
 
   // If we're using fallback, show a notification but still render the UI
   const usingFallback = !agent
+  console.log('[LegalAdvisor] Rendering, usingFallback:', usingFallback)
 
   return (
     <>
       <style>{customStyles}</style>
       <div className="h-screen flex bg-[#f5f3f0] dark:bg-[#0f1a0f] transition-colors" dir="rtl">
+      {console.log('[LegalAdvisor] JSX rendering')}
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div 

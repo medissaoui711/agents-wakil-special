@@ -44,7 +44,17 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="padding: 20px; text-align: center; font-family: sans-serif;">
+        <p>جاري التحميل...</p>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('Global error:', e.error);
+        document.getElementById('root').innerHTML = '<div style="padding: 20px; color: red;"><h3>خطأ في التطبيق:</h3><pre>' + (e.error?.message || 'Unknown error') + '</pre></div>';
+      });
+    </script>
   </body>
 </html>
