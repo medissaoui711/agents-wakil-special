@@ -86,16 +86,30 @@ export default function LegalAdvisor() {
 
   useEffect(() => {
     const fetchAgent = async () => {
+      console.log('[LegalAdvisor] Fetching agent:', agentId)
       try {
         const response = await api.get(`/agents/${agentId}`)
+        console.log('[LegalAdvisor] Agent fetched:', response.data)
         setAgent(response.data)
       } catch (error) {
-        console.error('Failed to fetch agent:', error)
+        console.error('[LegalAdvisor] Failed to fetch agent:', error)
       } finally {
+        console.log('[LegalAdvisor] Setting loading to false')
         setLoading(false)
       }
     }
+    
+    // Timeout fallback in case API hangs
+    const timeoutId = setTimeout(() => {
+      if (loading) {
+        console.log('[LegalAdvisor] Timeout - forcing loading false')
+        setLoading(false)
+      }
+    }, 3000)
+    
     fetchAgent()
+    
+    return () => clearTimeout(timeoutId)
   }, [agentId])
 
   useEffect(() => {
