@@ -31,7 +31,8 @@ import {
   Copy,
   Sparkles,
   Lightbulb,
-  FileEdit
+  FileEdit,
+  Info
 } from 'lucide-react'
 import { api } from '@/lib/api'
 
@@ -90,6 +91,7 @@ export default function LegalAdvisor() {
   const [uploadedDocs, setUploadedDocs] = useState<UploadedDocument[]>([])
   const [selectedDoc, setSelectedDoc] = useState<UploadedDocument | null>(null)
   const [language, setLanguage] = useState<'ar' | 'fr'>('ar')
+  const [showHistory, setShowHistory] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -492,14 +494,46 @@ export default function LegalAdvisor() {
 
           {/* Chat Panel (Left - 3/12) */}
           <div className="w-3/12 flex flex-col bg-white">
-            {/* Chat Header */}
-            <div className="px-4 py-3 border-b border-[#e0dcd5] flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#5c4a3a] rounded-lg flex items-center justify-center">
-                <Bot className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-[#5c4a3a]">المستشار القانوني</p>
-                <p className="text-xs text-[#9a8a7a]">جاهز للمساعدة</p>
+            {/* Chat Header - Enhanced */}
+            <div className="px-4 py-4 border-b border-[#e0dcd5] bg-gradient-to-r from-[#faf8f5] to-white">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <Avatar className="h-10 w-10 ring-2 ring-[#c4a574] ring-offset-2 ring-offset-white">
+                      <AvatarFallback className="bg-gradient-to-br from-[#5c4a3a] to-[#7a6a5a] text-white font-bold text-sm">
+                        {activeAgent.display_name?.slice(0, 2) || 'L'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white"></span>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-bold text-[#5c4a3a]">{activeAgent.display_name || 'المستشار القانوني'}</p>
+                      <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px] h-5 px-1.5">
+                        <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full ml-1 animate-pulse"></span>
+                        متصل
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-[#7a6a5a] truncate max-w-[150px]">{activeAgent.role || 'متخصص في العقود والاستشارات'}</p>
+                  </div>
+                </div>
+                
+                {/* Quick Status Icons */}
+                <div className="flex items-center gap-1">
+                  <button className="p-2 text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5] rounded-lg transition-colors" title="معلومات">
+                    <Info className="h-4 w-4" />
+                  </button>
+                  <button className="p-2 text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5] rounded-lg transition-colors" title="الإعدادات">
+                    <Settings className="h-4 w-4" />
+                  </button>
+                  <button 
+                    onClick={() => setShowHistory(!showHistory)}
+                    className={`p-2 rounded-lg transition-colors ${showHistory ? 'text-[#5c4a3a] bg-[#f0ebe5]' : 'text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5]'}`}
+                    title="سجل المحادثات"
+                  >
+                    <HistoryIcon className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
             </div>
 
