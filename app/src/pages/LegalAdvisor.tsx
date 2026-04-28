@@ -234,53 +234,6 @@ export default function LegalAdvisor() {
     }
   }, [])
 
-  // Export chat to file
-  const exportChat = useCallback((format: 'txt' | 'json') => {
-    const chatData = {
-      agent: activeAgent,
-      messages: messages,
-      timestamp: new Date().toISOString(),
-      document: selectedDoc
-    }
-
-    if (format === 'json') {
-      const blob = new Blob([JSON.stringify(chatData, null, 2)], { type: 'application/json' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `legal-consultation-${Date.now()}.json`
-      a.click()
-      URL.revokeObjectURL(url)
-    } else {
-      let text = `=== استشارة قانونية ===\n`
-      text += `التاريخ: ${new Date().toLocaleString('ar-SA')}\n`
-      text += `الوكيل: ${activeAgent.display_name}\n\n`
-      messages.forEach(m => {
-        const role = m.role === 'user' ? 'أنت' : 'المستشار القانوني'
-        text += `[${role}] ${new Date(m.created_at).toLocaleTimeString('ar-SA')}\n${m.content}\n\n`
-      })
-      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `legal-consultation-${Date.now()}.txt`
-      a.click()
-      URL.revokeObjectURL(url)
-    }
-    toast.success(`تم تصدير المحادثة بصيغة ${format.toUpperCase()}`)
-  }, [messages, activeAgent, selectedDoc])
-
-  // Share consultation link
-  const shareConsultation = useCallback(() => {
-    const shareUrl = `${window.location.origin}/legal/${agentId}?shared=true`
-    navigator.clipboard.writeText(shareUrl)
-    toast.success('تم نسخ رابط المشاركة', {
-      description: 'يمكنك مشاركته الآن مع الآخرين',
-      icon: <Share2 className="h-4 w-4" />
-    })
-    setShareDialogOpen(false)
-  }, [agentId])
-
   useEffect(() => {
     console.log('[LegalAdvisor] Fetching agent:', agentId)
     const fetchAgent = async () => {
@@ -405,6 +358,53 @@ export default function LegalAdvisor() {
 
   // Use fallback if no agent found
   const activeAgent = agent || fallbackAgent
+
+  // Export chat to file (moved after activeAgent)
+  const exportChat = useCallback((format: 'txt' | 'json') => {
+    const chatData = {
+      agent: activeAgent,
+      messages: messages,
+      timestamp: new Date().toISOString(),
+      document: selectedDoc
+    }
+
+    if (format === 'json') {
+      const blob = new Blob([JSON.stringify(chatData, null, 2)], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `legal-consultation-${Date.now()}.json`
+      a.click()
+      URL.revokeObjectURL(url)
+    } else {
+      let text = `=== استشارة قانونية ===\n`
+      text += `التاريخ: ${new Date().toLocaleString('ar-SA')}\n`
+      text += `الوكيل: ${activeAgent.display_name}\n\n`
+      messages.forEach(m => {
+        const role = m.role === 'user' ? 'أنت' : 'المستشار القانوني'
+        text += `[${role}] ${new Date(m.created_at).toLocaleTimeString('ar-SA')}\n${m.content}\n\n`
+      })
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `legal-consultation-${Date.now()}.txt`
+      a.click()
+      URL.revokeObjectURL(url)
+    }
+    toast.success(`تم تصدير المحادثة بصيغة ${format.toUpperCase()}`)
+  }, [messages, activeAgent, selectedDoc])
+
+  // Share consultation link (moved after activeAgent)
+  const shareConsultation = useCallback(() => {
+    const shareUrl = `${window.location.origin}/legal/${agentId}?shared=true`
+    navigator.clipboard.writeText(shareUrl)
+    toast.success('تم نسخ رابط المشاركة', {
+      description: 'يمكنك مشاركته الآن مع الآخرين',
+      icon: <Share2 className="h-4 w-4" />
+    })
+    setShareDialogOpen(false)
+  }, [agentId])
 
   // If we're using fallback, show a notification but still render the UI
   const usingFallback = !agent
