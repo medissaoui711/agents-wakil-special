@@ -37,6 +37,10 @@ import {
 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { toast } from 'sonner'
+import { useTheme } from '@/hooks/useTheme'
+import { Moon, Sun, Share2, Download, Menu, X, ChevronUp, ChevronDown } from 'lucide-react'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 // Custom animations
 const customStyles = `
@@ -163,6 +167,10 @@ export default function LegalAdvisor() {
   const [language, setLanguage] = useState<'ar' | 'fr'>('ar')
   const [showHistory, setShowHistory] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
+  const [shareDialogOpen, setShareDialogOpen] = useState(false)
+  const { theme, setTheme, resolvedTheme } = useTheme()
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -218,6 +226,53 @@ export default function LegalAdvisor() {
       })
     }
   }, [])
+
+  // Export chat to file
+  const exportChat = useCallback((format: 'txt' | 'json') => {
+    const chatData = {
+      agent: activeAgent,
+      messages: messages,
+      timestamp: new Date().toISOString(),
+      document: selectedDoc
+    }
+
+    if (format === 'json') {
+      const blob = new Blob([JSON.stringify(chatData, null, 2)], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `legal-consultation-${Date.now()}.json`
+      a.click()
+      URL.revokeObjectURL(url)
+    } else {
+      let text = `=== استشارة قانونية ===\n`
+      text += `التاريخ: ${new Date().toLocaleString('ar-SA')}\n`
+      text += `الوكيل: ${activeAgent.display_name}\n\n`
+      messages.forEach(m => {
+        const role = m.role === 'user' ? 'أنت' : 'المستشار القانوني'
+        text += `[${role}] ${new Date(m.created_at).toLocaleTimeString('ar-SA')}\n${m.content}\n\n`
+      })
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `legal-consultation-${Date.now()}.txt`
+      a.click()
+      URL.revokeObjectURL(url)
+    }
+    toast.success(`تم تصدير المحادثة بصيغة ${format.toUpperCase()}`)
+  }, [messages, activeAgent, selectedDoc])
+
+  // Share consultation link
+  const shareConsultation = useCallback(() => {
+    const shareUrl = `${window.location.origin}/legal/${agentId}?shared=true`
+    navigator.clipboard.writeText(shareUrl)
+    toast.success('تم نسخ رابط المشاركة', {
+      description: 'يمكنك مشاركته الآن مع الآخرين',
+      icon: <Share2 className="h-4 w-4" />
+    })
+    setShareDialogOpen(false)
+  }, [agentId])
 
   useEffect(() => {
     console.log('[LegalAdvisor] Fetching agent:', agentId)
@@ -347,12 +402,67 @@ export default function LegalAdvisor() {
   // If we're using fallback, show a notification but still render the UI
   const usingFallback = !agent
 
+  // Export chat to file
+  const exportChat = useCallback((format: 'txt' | 'json') => {
+    const chatData = {
+      agent: activeAgent,
+      messages: messages,
+      timestamp: new Date().toISOString(),
+      document: selectedDoc
+    }
+
+    if (format === 'json') {
+      const blob = new Blob([JSON.stringify(chatData, null, 2)], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `legal-consultation-${Date.now()}.json`
+      a.click()
+      URL.revokeObjectURL(url)
+    } else {
+      let text = `=== استشارة قانونية ===\n`
+      text += `التاريخ: ${new Date().toLocaleString('ar-SA')}\n`
+      text += `الوكيل: ${activeAgent.display_name}\n\n`
+      messages.forEach(m => {
+        const role = m.role === 'user' ? 'أنت' : 'المستشار القانوني'
+        text += `[${role}] ${new Date(m.created_at).toLocaleTimeString('ar-SA')}\n${m.content}\n\n`
+      })
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `legal-consultation-${Date.now()}.txt`
+      a.click()
+      URL.revokeObjectURL(url)
+    }
+    toast.success(`تم تصدير المحادثة بصيغة ${format.toUpperCase()}`)
+  }, [messages, activeAgent, selectedDoc])
+
+  // Share consultation link
+  const shareConsultation = useCallback(() => {
+    const shareUrl = `${window.location.origin}/legal/${agentId}?shared=true`
+    navigator.clipboard.writeText(shareUrl)
+    toast.success('تم نسخ رابط المشاركة', {
+      description: 'يمكنك مشاركته الآن مع الآخرين',
+      icon: <Share2 className="h-4 w-4" />
+    })
+    setShareDialogOpen(false)
+  }, [agentId])
+
   return (
     <>
       <style>{customStyles}</style>
-      <div className="h-screen flex bg-[#f5f3f0]" dir="rtl">
-      {/* Sidebar - Dark Green */}
-      <div className="w-72 bg-[#1a2f1a] text-[#e8e4df] flex flex-col">
+      <div className="h-screen flex bg-[#f5f3f0] dark:bg-[#0f1a0f] transition-colors" dir="rtl">
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+      
+      {/* Sidebar - Dark Green - Responsive */}
+      <div className={`${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} fixed lg:static lg:translate-x-0 right-0 top-0 h-full w-72 bg-[#1a2f1a] text-[#e8e4df] flex flex-col z-50 transition-transform duration-300 lg:order-none order-2`}>
         {/* Logo */}
         <div className="p-5 border-b border-[#2d4a2d]">
           <Link to="/" className="flex items-center gap-3">
@@ -430,29 +540,110 @@ export default function LegalAdvisor() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Main Content - Responsive */}
+      <div className="flex-1 flex flex-col overflow-hidden order-1 w-full">
         {/* Fallback Notification */}
         {usingFallback && (
-          <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-center">
-            <p className="text-sm text-amber-800">
+          <div className="bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 px-4 py-2 text-center">
+            <p className="text-sm text-amber-800 dark:text-amber-400">
               ⚠️ يتم استخدام وضع العرض التجريبي - الوكيل القانوني غير مسجل في قاعدة البيانات
             </p>
           </div>
         )}
-        {/* Header */}
-        <header className="bg-white border-b border-[#e0dcd5] px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" asChild className="text-[#5c4a3a]">
+        {/* Header - Mobile Responsive */}
+        <header className="bg-white dark:bg-[#1a1a1a] border-b border-[#e0dcd5] dark:border-[#333] px-4 lg:px-6 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden p-2 text-[#5c4a3a] dark:text-[#c4a574] hover:bg-[#f0ebe5] dark:hover:bg-[#2a2a2a] rounded-lg transition-colors"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            
+            <Button variant="ghost" size="sm" asChild className="text-[#5c4a3a] dark:text-[#c4a574]">
               <Link to={`/agent/${activeAgent.handle}`}>
                 <ArrowLeft className="h-4 w-4 ml-2" />
-                العودة
+                <span className="hidden sm:inline">العودة</span>
               </Link>
             </Button>
           </div>
 
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 text-sm text-[#5c4a3a]">
+          <div className="flex items-center gap-3 lg:gap-6">
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+              className="p-2 text-[#7a6a5a] dark:text-[#9a8a7a] hover:text-[#5c4a3a] dark:hover:text-[#c4a574] hover:bg-[#f0ebe5] dark:hover:bg-[#2a2a2a] rounded-lg transition-colors"
+              title={resolvedTheme === 'dark' ? 'وضع النهار' : 'وضع الليل'}
+            >
+              {resolvedTheme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            
+            {/* Export Button */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="hidden sm:flex p-2 text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5] rounded-lg transition-colors" title="تصدير المحادثة">
+                  <Download className="h-4 w-4" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="dark:bg-[#1a1a1a] dark:border-[#333]">
+                <DialogHeader>
+                  <DialogTitle className="text-[#5c4a3a] dark:text-[#c4a574]">تصدير المحادثة</DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-col gap-3 mt-4">
+                  <button 
+                    onClick={() => exportChat('txt')}
+                    className="flex items-center gap-3 p-4 bg-[#f5f3f0] dark:bg-[#2a2a2a] hover:bg-[#ebe7e0] dark:hover:bg-[#333] rounded-xl transition-colors text-right"
+                  >
+                    <FileText className="h-5 w-5 text-[#5c4a3a] dark:text-[#c4a574]" />
+                    <div>
+                      <p className="font-medium text-[#5c4a3a] dark:text-[#e8e4df]">تصدير كنص</p>
+                      <p className="text-xs text-[#7a6a5a] dark:text-[#9a8a7a]">TXT format</p>
+                    </div>
+                  </button>
+                  <button 
+                    onClick={() => exportChat('json')}
+                    className="flex items-center gap-3 p-4 bg-[#f5f3f0] dark:bg-[#2a2a2a] hover:bg-[#ebe7e0] dark:hover:bg-[#333] rounded-xl transition-colors text-right"
+                  >
+                    <FileEdit className="h-5 w-5 text-[#5c4a3a] dark:text-[#c4a574]" />
+                    <div>
+                      <p className="font-medium text-[#5c4a3a] dark:text-[#e8e4df]">تصدير كـ JSON</p>
+                      <p className="text-xs text-[#7a6a5a] dark:text-[#9a8a7a]">JSON format</p>
+                    </div>
+                  </button>
+                </div>
+              </DialogContent>
+            </Dialog>
+            
+            {/* Share Button */}
+            <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
+              <DialogTrigger asChild>
+                <button className="hidden sm:flex p-2 text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5] rounded-lg transition-colors" title="مشاركة">
+                  <Share2 className="h-4 w-4" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="dark:bg-[#1a1a1a] dark:border-[#333]">
+                <DialogHeader>
+                  <DialogTitle className="text-[#5c4a3a] dark:text-[#c4a574]">مشاركة الاستشارة</DialogTitle>
+                </DialogHeader>
+                <div className="mt-4">
+                  <p className="text-sm text-[#7a6a5a] dark:text-[#9a8a7a] mb-4">انسخ الرابط لمشاركة هذه الاستشارة مع الآخرين</p>
+                  <div className="flex gap-2">
+                    <input 
+                      type="text" 
+                      readOnly 
+                      value={`${window.location.origin}/legal/${agentId}?shared=true`}
+                      className="flex-1 p-3 bg-[#f5f3f0] dark:bg-[#2a2a2a] border border-[#e0dcd5] dark:border-[#333] rounded-xl text-sm text-[#5c4a3a] dark:text-[#e8e4df]"
+                    />
+                    <Button onClick={shareConsultation} className="bg-[#5c4a3a] hover:bg-[#4a3a2a] text-white">
+                      نسخ
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+            
+            <div className="hidden sm:flex items-center gap-2 text-sm text-[#5c4a3a]">
               <span className="text-[#7a6a5a]">Français</span>
               <span className="text-[#c4a574]">|</span>
               <span className="font-medium">عربي</span>
@@ -469,10 +660,10 @@ export default function LegalAdvisor() {
           </div>
         </header>
 
-        {/* Content Area - Three Columns */}
-        <div className="flex-1 flex overflow-hidden">
-          {/* Document View (Center) */}
-          <div className="w-5/12 flex flex-col border-l border-[#e0dcd5]">
+        {/* Content Area - Responsive Three Columns */}
+        <div className="flex-1 flex overflow-hidden flex-col lg:flex-row">
+          {/* Document View (Center) - Responsive */}
+          <div className="hidden lg:flex w-5/12 flex-col border-l border-[#e0dcd5] dark:border-[#333]">
             {/* Upload Bar - Enhanced with Drag & Drop */}
             <div 
               className={`bg-white p-4 border-b border-[#e0dcd5] transition-all duration-300 ${isDragOver ? 'bg-[#f0f9ff] border-blue-400' : ''}`}
@@ -657,13 +848,13 @@ export default function LegalAdvisor() {
             </ScrollArea>
           </div>
 
-          {/* Chat Panel (Left - 3/12) */}
-          <div className="w-3/12 flex flex-col bg-white relative overflow-hidden">
+          {/* Chat Panel (Right) - Full width on mobile */}
+          <div className="flex-1 lg:w-3/12 flex flex-col bg-white dark:bg-[#1a1a1a] relative overflow-hidden">
             
             {/* Chat History Sidebar */}
-            <div className={`absolute inset-0 bg-white z-20 transition-transform duration-300 ${showHistory ? 'translate-x-0' : 'translate-x-full'}`}>
-              <div className="p-4 border-b border-[#e0dcd5] flex items-center justify-between bg-gradient-to-r from-[#faf8f5] to-white">
-                <h3 className="text-sm font-bold text-[#5c4a3a] flex items-center gap-2">
+            <div className={`absolute inset-0 bg-white dark:bg-[#1a1a1a] z-20 transition-transform duration-300 ${showHistory ? 'translate-x-0' : 'translate-x-full'}`}>
+              <div className="p-4 border-b border-[#e0dcd5] dark:border-[#333] flex items-center justify-between bg-gradient-to-r from-[#faf8f5] to-white dark:from-[#1a1a1a] dark:to-[#1a1a1a]">
+                <h3 className="text-sm font-bold text-[#5c4a3a] dark:text-[#c4a574] flex items-center gap-2">
                   <HistoryIcon className="h-4 w-4" />
                   سجل المحادثات
                 </h3>

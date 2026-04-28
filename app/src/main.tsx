@@ -4,11 +4,14 @@ import { BrowserRouter } from 'react-router'
 import './index.css'
 import './styles/responsive.css'
 import App from './App.tsx'
+import { ThemeProvider } from './hooks/useTheme'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
   </StrictMode>,
 )
