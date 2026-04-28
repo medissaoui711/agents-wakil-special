@@ -1,0 +1,630 @@
+nohup: ignoring input
+INFO:     Will watch for changes in these directories: ['/home/med/CascadeProjects/Kimi_Agent/backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [5516] using WatchFiles
+INFO:     Started server process [5540]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 02:09:53,661 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:09:53,662 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 02:09:53,662 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 02:09:53,665 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 02:09:53,665 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 02:09:53,668 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 02:09:53,668 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 02:09:53,673 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 02:09:53,678 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 02:09:53,686 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+✅ Database initialized
+2026-04-27 02:10:52,205 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:10:52,237 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:10:52,237 INFO sqlalchemy.engine.Engine [generated in 0.00058s] ()
+2026-04-27 02:10:52,750 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:59558 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:11:17,946 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:11:17,949 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:11:17,949 INFO sqlalchemy.engine.Engine [cached since 25.71s ago] ()
+2026-04-27 02:11:17,954 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:44326 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:17:53,864 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:17:53,867 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:17:53,867 INFO sqlalchemy.engine.Engine [cached since 421.6s ago] ()
+2026-04-27 02:17:53,888 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:55146 - "GET /api/agents/network HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55152 - "OPTIONS /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:17:58,035 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:17:58,036 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:17:58,036 INFO sqlalchemy.engine.Engine [cached since 425.8s ago] ()
+2026-04-27 02:17:58,041 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:55166 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:17:58,071 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:17:58,072 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:17:58,072 INFO sqlalchemy.engine.Engine [cached since 425.8s ago] ()
+2026-04-27 02:17:58,075 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:55166 - "GET /api/agents/network HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45448 - "OPTIONS /api/handles/check/medwats HTTP/1.1" 200 OK
+2026-04-27 02:19:48,982 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:19:48,989 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 02:19:48,989 INFO sqlalchemy.engine.Engine [generated in 0.00113s] ('medwats',)
+2026-04-27 02:19:48,996 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:45456 - "GET /api/handles/check/medwats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35492 - "OPTIONS /api/handles/reserve HTTP/1.1" 200 OK
+2026-04-27 02:20:41,769 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:20:41,770 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 02:20:41,770 INFO sqlalchemy.engine.Engine [cached since 52.78s ago] ('medwats',)
+2026-04-27 02:20:41,773 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 02:20:41,773 INFO sqlalchemy.engine.Engine [cached since 52.78s ago] ('medwats',)
+2026-04-27 02:20:41,775 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 02:20:41,775 INFO sqlalchemy.engine.Engine [cached since 52.79s ago] ('medwats',)
+2026-04-27 02:20:41,791 INFO sqlalchemy.engine.Engine INSERT INTO handles (handle, user_id, email, status, reserved_at, expires_at, claimed_at) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-04-27 02:20:41,791 INFO sqlalchemy.engine.Engine [generated in 0.00110s] ('medwats', None, 'medissa711@gmail.com', 'reserved', '2026-04-26 23:20:41.777099', '2026-04-26 23:30:41.777099', None)
+2026-04-27 02:20:41,797 INFO sqlalchemy.engine.Engine COMMIT
+2026-04-27 02:20:41,823 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:20:41,835 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.id = ?
+2026-04-27 02:20:41,836 INFO sqlalchemy.engine.Engine [generated in 0.00205s] (18,)
+2026-04-27 02:20:41,844 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:35496 - "POST /api/handles/reserve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60376 - "OPTIONS /api/agents/network HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60378 - "OPTIONS /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:38:04,279 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:38:04,282 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:38:04,282 INFO sqlalchemy.engine.Engine [cached since 1632s ago] ()
+2026-04-27 02:38:04,338 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:60390 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:38:04,417 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:38:04,423 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:38:04,427 INFO sqlalchemy.engine.Engine [cached since 1632s ago] ()
+2026-04-27 02:38:04,443 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:60390 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:46:15,689 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:46:15,690 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:46:15,690 INFO sqlalchemy.engine.Engine [cached since 2123s ago] ()
+2026-04-27 02:46:15,695 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:33752 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:46:15,704 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:46:15,711 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:46:15,712 INFO sqlalchemy.engine.Engine [cached since 2123s ago] ()
+2026-04-27 02:46:15,722 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:33752 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:47:54,047 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:47:54,048 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:47:54,048 INFO sqlalchemy.engine.Engine [cached since 2222s ago] ()
+2026-04-27 02:47:54,053 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:57412 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:47:54,061 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:47:54,062 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:47:54,062 INFO sqlalchemy.engine.Engine [cached since 2222s ago] ()
+2026-04-27 02:47:54,065 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:57412 - "GET /api/agents/network HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38176 - "OPTIONS /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:49:20,108 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:49:20,109 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:49:20,109 INFO sqlalchemy.engine.Engine [cached since 2308s ago] ()
+2026-04-27 02:49:20,113 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:38178 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:49:20,119 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:49:20,120 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:49:20,120 INFO sqlalchemy.engine.Engine [cached since 2308s ago] ()
+2026-04-27 02:49:20,123 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:38178 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:50:25,865 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:50:25,866 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:50:25,867 INFO sqlalchemy.engine.Engine [cached since 2374s ago] ()
+2026-04-27 02:50:25,872 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:52344 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:50:25,902 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:50:25,903 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:50:25,903 INFO sqlalchemy.engine.Engine [cached since 2374s ago] ()
+2026-04-27 02:50:25,908 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:52344 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:57:11,948 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:57:11,948 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:57:11,949 INFO sqlalchemy.engine.Engine [cached since 2780s ago] ()
+2026-04-27 02:57:11,954 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:44564 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 02:57:11,961 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 02:57:11,963 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 02:57:11,963 INFO sqlalchemy.engine.Engine [cached since 2780s ago] ()
+2026-04-27 02:57:11,971 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:44564 - "GET /api/agents/network HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46814 - "OPTIONS /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:01:41,030 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:01:41,032 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:01:41,032 INFO sqlalchemy.engine.Engine [cached since 3049s ago] ()
+2026-04-27 03:01:41,036 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:46828 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:01:41,048 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:01:41,049 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:01:41,049 INFO sqlalchemy.engine.Engine [cached since 3049s ago] ()
+2026-04-27 03:01:41,053 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:46828 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:04:52,168 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:04:52,169 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:04:52,169 INFO sqlalchemy.engine.Engine [cached since 3240s ago] ()
+2026-04-27 03:04:52,173 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:39918 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:04:52,187 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:04:52,188 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:04:52,188 INFO sqlalchemy.engine.Engine [cached since 3240s ago] ()
+2026-04-27 03:04:52,193 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:39924 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:05:02,249 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:05:02,250 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:05:02,251 INFO sqlalchemy.engine.Engine [cached since 3250s ago] ()
+2026-04-27 03:05:02,261 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:44260 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:05:02,291 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:05:02,292 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:05:02,293 INFO sqlalchemy.engine.Engine [cached since 3250s ago] ()
+2026-04-27 03:05:02,298 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:44276 - "GET /api/agents/network HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44528 - "OPTIONS /api/agents/lang_tutor HTTP/1.1" 200 OK
+2026-04-27 03:05:23,491 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:05:23,496 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 03:05:23,497 INFO sqlalchemy.engine.Engine [cached since 2735s ago] ('lang_tutor',)
+2026-04-27 03:05:23,511 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at 
+FROM agent_profiles 
+WHERE agent_profiles.handle_id = ? AND agent_profiles.is_public = 1
+2026-04-27 03:05:23,511 INFO sqlalchemy.engine.Engine [generated in 0.00070s] (15,)
+2026-04-27 03:05:23,514 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:44544 - "GET /api/agents/lang_tutor HTTP/1.1" 200 OK
+2026-04-27 03:05:23,532 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:05:23,535 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 03:05:23,536 INFO sqlalchemy.engine.Engine [cached since 2735s ago] ('lang_tutor',)
+2026-04-27 03:05:23,545 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at 
+FROM agent_profiles 
+WHERE agent_profiles.handle_id = ? AND agent_profiles.is_public = 1
+2026-04-27 03:05:23,546 INFO sqlalchemy.engine.Engine [cached since 0.03569s ago] (15,)
+2026-04-27 03:05:23,552 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:44544 - "GET /api/agents/lang_tutor HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59674 - "OPTIONS /api/agents/ex_stripe HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59682 - "OPTIONS /api/agents/ex_stripe HTTP/1.1" 200 OK
+2026-04-27 03:07:31,478 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:07:31,478 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 03:07:31,479 INFO sqlalchemy.engine.Engine [cached since 2862s ago] ('ex_stripe',)
+2026-04-27 03:07:31,488 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at 
+FROM agent_profiles 
+WHERE agent_profiles.handle_id = ? AND agent_profiles.is_public = 1
+2026-04-27 03:07:31,489 INFO sqlalchemy.engine.Engine [cached since 128s ago] (7,)
+2026-04-27 03:07:31,494 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:59684 - "GET /api/agents/ex_stripe HTTP/1.1" 200 OK
+2026-04-27 03:07:31,515 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:07:31,517 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 03:07:31,520 INFO sqlalchemy.engine.Engine [cached since 2863s ago] ('ex_stripe',)
+2026-04-27 03:07:31,531 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at 
+FROM agent_profiles 
+WHERE agent_profiles.handle_id = ? AND agent_profiles.is_public = 1
+2026-04-27 03:07:31,532 INFO sqlalchemy.engine.Engine [cached since 128s ago] (7,)
+2026-04-27 03:07:31,535 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:59684 - "GET /api/agents/ex_stripe HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38510 - "OPTIONS /api/agents/design_lead HTTP/1.1" 200 OK
+2026-04-27 03:09:37,659 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:09:37,660 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 03:09:37,660 INFO sqlalchemy.engine.Engine [cached since 2989s ago] ('design_lead',)
+2026-04-27 03:09:37,662 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at 
+FROM agent_profiles 
+WHERE agent_profiles.handle_id = ? AND agent_profiles.is_public = 1
+2026-04-27 03:09:37,663 INFO sqlalchemy.engine.Engine [cached since 254.2s ago] (9,)
+2026-04-27 03:09:37,667 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:38514 - "GET /api/agents/design_lead HTTP/1.1" 200 OK
+2026-04-27 03:09:37,682 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:09:37,683 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 03:09:37,683 INFO sqlalchemy.engine.Engine [cached since 2989s ago] ('design_lead',)
+2026-04-27 03:09:37,686 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at 
+FROM agent_profiles 
+WHERE agent_profiles.handle_id = ? AND agent_profiles.is_public = 1
+2026-04-27 03:09:37,687 INFO sqlalchemy.engine.Engine [cached since 254.2s ago] (9,)
+2026-04-27 03:09:37,689 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:38514 - "GET /api/agents/design_lead HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57578 - "OPTIONS /api/agents/angel_sf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57586 - "OPTIONS /api/agents/angel_sf HTTP/1.1" 200 OK
+2026-04-27 03:11:23,992 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:11:23,992 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 03:11:23,992 INFO sqlalchemy.engine.Engine [cached since 3095s ago] ('angel_sf',)
+2026-04-27 03:11:23,997 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at 
+FROM agent_profiles 
+WHERE agent_profiles.handle_id = ? AND agent_profiles.is_public = 1
+2026-04-27 03:11:23,998 INFO sqlalchemy.engine.Engine [cached since 360.5s ago] (3,)
+2026-04-27 03:11:24,007 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:57596 - "GET /api/agents/angel_sf HTTP/1.1" 200 OK
+2026-04-27 03:11:24,028 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:11:24,029 INFO sqlalchemy.engine.Engine SELECT handles.id, handles.handle, handles.user_id, handles.email, handles.status, handles.reserved_at, handles.expires_at, handles.claimed_at, handles.created_at 
+FROM handles 
+WHERE handles.handle = ?
+2026-04-27 03:11:24,029 INFO sqlalchemy.engine.Engine [cached since 3095s ago] ('angel_sf',)
+2026-04-27 03:11:24,032 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at 
+FROM agent_profiles 
+WHERE agent_profiles.handle_id = ? AND agent_profiles.is_public = 1
+2026-04-27 03:11:24,033 INFO sqlalchemy.engine.Engine [cached since 360.5s ago] (3,)
+2026-04-27 03:11:24,035 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:57596 - "GET /api/agents/angel_sf HTTP/1.1" 200 OK
+2026-04-27 03:11:34,617 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:11:34,618 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:11:34,619 INFO sqlalchemy.engine.Engine [cached since 3642s ago] ()
+2026-04-27 03:11:34,625 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:46414 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:11:34,637 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:11:34,638 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:11:34,638 INFO sqlalchemy.engine.Engine [cached since 3642s ago] ()
+2026-04-27 03:11:34,644 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:46414 - "GET /api/agents/network HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'models.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5540]
+INFO:     Started server process [10990]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 03:13:04,373 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:13:04,375 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 03:13:04,375 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:04,378 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 03:13:04,378 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:04,380 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 03:13:04,380 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:04,381 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 03:13:04,382 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:04,383 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("chat_rooms")
+2026-04-27 03:13:04,383 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:04,384 INFO sqlalchemy.engine.Engine PRAGMA temp.table_info("chat_rooms")
+2026-04-27 03:13:04,384 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:04,385 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2026-04-27 03:13:04,385 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:04,386 INFO sqlalchemy.engine.Engine PRAGMA temp.table_info("messages")
+2026-04-27 03:13:04,386 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:04,388 INFO sqlalchemy.engine.Engine 
+CREATE TABLE chat_rooms (
+	id INTEGER NOT NULL, 
+	agent1_id INTEGER NOT NULL, 
+	agent2_id INTEGER NOT NULL, 
+	last_message_at DATETIME, 
+	created_at DATETIME DEFAULT (CURRENT_TIMESTAMP), 
+	PRIMARY KEY (id)
+)
+
+
+2026-04-27 03:13:04,388 INFO sqlalchemy.engine.Engine [no key 0.00019s] ()
+2026-04-27 03:13:04,425 INFO sqlalchemy.engine.Engine CREATE INDEX idx_chatroom_last_msg ON chat_rooms (last_message_at)
+2026-04-27 03:13:04,425 INFO sqlalchemy.engine.Engine [no key 0.00023s] ()
+2026-04-27 03:13:04,448 INFO sqlalchemy.engine.Engine CREATE INDEX idx_chatroom_agents ON chat_rooms (agent1_id, agent2_id)
+2026-04-27 03:13:04,448 INFO sqlalchemy.engine.Engine [no key 0.00014s] ()
+2026-04-27 03:13:04,480 INFO sqlalchemy.engine.Engine CREATE INDEX ix_chat_rooms_id ON chat_rooms (id)
+2026-04-27 03:13:04,481 INFO sqlalchemy.engine.Engine [no key 0.00094s] ()
+2026-04-27 03:13:04,531 INFO sqlalchemy.engine.Engine 
+CREATE TABLE messages (
+	id INTEGER NOT NULL, 
+	room_id INTEGER NOT NULL, 
+	sender_id INTEGER NOT NULL, 
+	content TEXT NOT NULL, 
+	is_read BOOLEAN, 
+	created_at DATETIME DEFAULT (CURRENT_TIMESTAMP), 
+	PRIMARY KEY (id)
+)
+
+
+2026-04-27 03:13:04,532 INFO sqlalchemy.engine.Engine [no key 0.00050s] ()
+2026-04-27 03:13:04,554 INFO sqlalchemy.engine.Engine CREATE INDEX idx_message_sender ON messages (sender_id)
+2026-04-27 03:13:04,555 INFO sqlalchemy.engine.Engine [no key 0.00102s] ()
+2026-04-27 03:13:04,585 INFO sqlalchemy.engine.Engine CREATE INDEX ix_messages_id ON messages (id)
+2026-04-27 03:13:04,585 INFO sqlalchemy.engine.Engine [no key 0.00025s] ()
+2026-04-27 03:13:04,616 INFO sqlalchemy.engine.Engine CREATE INDEX idx_message_created ON messages (created_at)
+2026-04-27 03:13:04,617 INFO sqlalchemy.engine.Engine [no key 0.00016s] ()
+2026-04-27 03:13:04,649 INFO sqlalchemy.engine.Engine CREATE INDEX idx_message_room ON messages (room_id)
+2026-04-27 03:13:04,650 INFO sqlalchemy.engine.Engine [no key 0.00077s] ()
+2026-04-27 03:13:04,677 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'schemas.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [10990]
+INFO:     Started server process [11006]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 03:13:21,212 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:13:21,215 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 03:13:21,215 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:21,219 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 03:13:21,220 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:21,222 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 03:13:21,223 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:21,225 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 03:13:21,225 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:21,229 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("chat_rooms")
+2026-04-27 03:13:21,229 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:21,235 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2026-04-27 03:13:21,236 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:13:21,240 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routers/chat.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11006]
+INFO:     Started server process [11046]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 03:14:06,385 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:14:06,386 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 03:14:06,386 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:06,389 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 03:14:06,389 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:06,390 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 03:14:06,390 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:06,391 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 03:14:06,392 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:06,393 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("chat_rooms")
+2026-04-27 03:14:06,393 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:06,394 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2026-04-27 03:14:06,394 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:06,396 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11046]
+INFO:     Started server process [11079]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 03:14:22,716 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:14:22,717 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 03:14:22,717 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:22,721 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 03:14:22,721 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:22,723 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 03:14:22,723 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:22,725 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 03:14:22,725 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:22,726 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("chat_rooms")
+2026-04-27 03:14:22,726 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:22,728 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2026-04-27 03:14:22,728 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:22,729 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11079]
+INFO:     Started server process [11083]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 03:14:30,816 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:14:30,816 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 03:14:30,816 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:30,818 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 03:14:30,818 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:30,819 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 03:14:30,819 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:30,820 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 03:14:30,820 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:30,821 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("chat_rooms")
+2026-04-27 03:14:30,821 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:30,822 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2026-04-27 03:14:30,822 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:14:30,823 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+✅ Database initialized
+INFO:     127.0.0.1:33234 - "OPTIONS /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:15:46,857 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:15:46,916 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:15:46,917 INFO sqlalchemy.engine.Engine [generated in 0.00098s] ()
+2026-04-27 03:15:46,928 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:33240 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:15:46,951 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:15:46,953 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:15:46,953 INFO sqlalchemy.engine.Engine [cached since 0.03687s ago] ()
+2026-04-27 03:15:46,957 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:33240 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:15:47,840 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:15:47,841 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:15:47,841 INFO sqlalchemy.engine.Engine [cached since 0.9249s ago] ()
+2026-04-27 03:15:47,848 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:33240 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:15:47,854 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:15:47,855 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:15:47,855 INFO sqlalchemy.engine.Engine [cached since 0.9389s ago] ()
+2026-04-27 03:15:47,858 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:33240 - "GET /api/agents/network HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'routers/dashboard.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11083]
+INFO:     Started server process [11501]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 03:17:40,232 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:17:40,233 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 03:17:40,234 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:40,237 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 03:17:40,238 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:40,240 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 03:17:40,241 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:40,242 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 03:17:40,242 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:40,243 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("chat_rooms")
+2026-04-27 03:17:40,244 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:40,245 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2026-04-27 03:17:40,245 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:40,246 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11501]
+INFO:     Started server process [11507]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 03:17:50,193 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:17:50,194 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 03:17:50,194 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:50,197 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 03:17:50,197 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:50,198 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 03:17:50,199 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:50,200 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 03:17:50,200 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:50,201 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("chat_rooms")
+2026-04-27 03:17:50,201 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:50,202 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2026-04-27 03:17:50,202 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:50,204 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11507]
+INFO:     Started server process [11523]
+INFO:     Waiting for application startup.
+🚀 Starting Wakalat API
+2026-04-27 03:17:59,450 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:17:59,450 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-04-27 03:17:59,450 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:59,452 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("handles")
+2026-04-27 03:17:59,452 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:59,453 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("agent_profiles")
+2026-04-27 03:17:59,453 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:59,454 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("connections")
+2026-04-27 03:17:59,454 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:59,455 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("chat_rooms")
+2026-04-27 03:17:59,455 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:59,455 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2026-04-27 03:17:59,455 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-04-27 03:17:59,456 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+✅ Database initialized
+2026-04-27 03:19:33,185 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:19:33,256 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:19:33,257 INFO sqlalchemy.engine.Engine [generated in 0.00050s] ()
+2026-04-27 03:19:33,261 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:57944 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:19:33,283 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:19:33,284 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:19:33,284 INFO sqlalchemy.engine.Engine [cached since 0.02831s ago] ()
+2026-04-27 03:19:33,290 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:57944 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:19:37,477 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:19:37,477 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:19:37,477 INFO sqlalchemy.engine.Engine [cached since 4.221s ago] ()
+2026-04-27 03:19:37,494 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:57944 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:19:37,510 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:19:37,514 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:19:37,514 INFO sqlalchemy.engine.Engine [cached since 4.258s ago] ()
+2026-04-27 03:19:37,527 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:57944 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:23:51,642 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:23:51,643 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:23:51,644 INFO sqlalchemy.engine.Engine [cached since 258.4s ago] ()
+2026-04-27 03:23:51,650 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:54070 - "GET /api/agents/network HTTP/1.1" 200 OK
+2026-04-27 03:23:51,660 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-27 03:23:51,661 INFO sqlalchemy.engine.Engine SELECT agent_profiles.id, agent_profiles.handle_id, agent_profiles.display_name, agent_profiles.role, agent_profiles.country, agent_profiles.tags, agent_profiles.bio, agent_profiles.is_public, agent_profiles.created_at, agent_profiles.updated_at, handles.handle AS handle_name 
+FROM agent_profiles JOIN handles ON agent_profiles.handle_id = handles.id 
+WHERE agent_profiles.is_public = 1 ORDER BY agent_profiles.created_at DESC
+2026-04-27 03:23:51,661 INFO sqlalchemy.engine.Engine [cached since 258.4s ago] ()
+2026-04-27 03:23:51,668 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:54070 - "GET /api/agents/network HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11523]
+INFO:     Stopping reloader process [5516]

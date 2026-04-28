@@ -1,0 +1,241 @@
+/**
+ * Responsive Design Enhancements for Wakalat
+ * Mobile-first approach with progressive enhancement
+ */
+
+/* Mobile-first base styles */
+@media (max-width: 640px) {
+  /* Typography scaling */
+  html {
+    font-size: 14px;
+  }
+  
+  /* Adjust heading sizes for mobile */
+  h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.3;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.35;
+  }
+  
+  h3 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Improve touch targets */
+  button, 
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Stack layout on mobile */
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+
+  /* Full width on mobile */
+  .mobile-full {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Hide on mobile */
+  .hide-mobile {
+    display: none !important;
+  }
+
+  /* Show only on mobile */
+  .show-mobile {
+    display: block !important;
+  }
+
+  /* Responsive padding */
+  .responsive-padding {
+    padding: 0.75rem !important;
+  }
+
+  /* Responsive margins */
+  .responsive-margin {
+    margin: 0.5rem !important;
+  }
+
+  /* Stack grid items on mobile */
+  .responsive-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 2.25rem !important;
+  }
+  
+  h2 {
+    font-size: 1.875rem !important;
+  }
+
+  /* Two column grid on tablet */
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+  html {
+    font-size: 16px;
+  }
+
+  /* Hide on desktop */
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* High DPI / Retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  /* Can be enabled when dark mode is implemented */
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-right {
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .landscape-hide {
+    display: none !important;
+  }
+
+  .landscape-compact {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .touch-target {
+    padding: 0.75rem 1rem;
+  }
+
+  /* Remove hover effects that don't work on touch */
+  .touch-no-hover:hover {
+    transform: none !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Container queries for component-level responsiveness */
+@container (max-width: 400px) {
+  .container-compact {
+    flex-direction: column;
+  }
+}
+
+/* Utility classes for responsive text */
+.text-responsive-xs {
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.text-responsive-sm {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.text-responsive-base {
+  font-size: clamp(1rem, 3vw, 1.125rem);
+}
+
+.text-responsive-lg {
+  font-size: clamp(1.125rem, 4vw, 1.5rem);
+}
+
+.text-responsive-xl {
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+}
+
+.text-responsive-2xl {
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+/* Fluid spacing */
+.space-responsive {
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+/* Responsive images */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Scroll snap for carousels on mobile */
+@media (max-width: 640px) {
+  .snap-scroll {
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .snap-scroll > * {
+    scroll-snap-align: start;
+  }
+}
