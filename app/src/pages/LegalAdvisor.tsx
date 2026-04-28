@@ -87,7 +87,7 @@ export default function LegalAdvisor() {
   useEffect(() => {
     const fetchAgent = async () => {
       try {
-        const response = await api.get(/agents/${agentId})
+        const response = await api.get(`/agents/${agentId}`)
         setAgent(response.data)
       } catch (error) {
         console.error('Failed to fetch agent:', error)
@@ -114,7 +114,7 @@ export default function LegalAdvisor() {
     setInput('')
     setSending(true)
     try {
-      const response = await api.post(/agents/${agentId}/chat, { message: input })
+      const response = await api.post(`/agents/${agentId}/chat`, { message: input })
       const assistantMessage: Message = {
         id: Date.now() + 1,
         role: 'assistant',
