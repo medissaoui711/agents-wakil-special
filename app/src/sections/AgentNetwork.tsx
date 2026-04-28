@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 interface Agent {
   id: number | string
   handle_id: number
-  handاداتةle: string
+  handle: string
   display_name?: string
   role?: string
   country?: string
