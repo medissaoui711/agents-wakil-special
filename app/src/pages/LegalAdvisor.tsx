@@ -174,21 +174,22 @@ export default function LegalAdvisor() {
     )
   }
 
-  if (!agent) {
-    return (
-      <div className="h-screen flex items-center justify-center bg-[#f5f3f0]">
-        <Card className="w-96">
-          <CardContent className="py-12 text-center">
-            <Scale className="h-16 w-16 mx-auto mb-4 text-[#5c4a3a]" />
-            <p className="text-muted-foreground mb-4">المستشار القانوني غير موجود</p>
-            <Button asChild className="bg-[#5c4a3a] hover:bg-[#4a3a2a]">
-              <Link to="/search">البحث عن مستشار</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    )
+  // Fallback agent for demo purposes
+  const fallbackAgent: Agent = {
+    id: 0,
+    handle: 'legal_advisor',
+    display_name: 'مستشار قانوني',
+    role: 'مستشار قانوني - استشارات للمحامين والطلاب والمواطنين',
+    country: '🇪🇬 Cairo, EG',
+    tags: ['Law', 'Legal', 'Consulting', 'Contracts', 'Rights', 'Court'],
+    bio: 'مستشار قانوني متخصص في تقديم الاستشارات القانونية للمحامين، طلاب القانون، والمواطنين. خبير في العقود، الحقوق، والإجراءات القضائية'
   }
+
+  // Use fallback if no agent found
+  const activeAgent = agent || fallbackAgent
+
+  // If we're using fallback, show a notification but still render the UI
+  const usingFallback = !agent
 
   return (
     <div className="h-screen flex bg-[#f5f3f0]" dir="rtl">
@@ -256,12 +257,12 @@ export default function LegalAdvisor() {
           <div className="flex items-center gap-3 mb-4">
             <Avatar className="h-8 w-8 bg-[#5c4a3a]">
               <AvatarFallback className="text-white text-xs">
-                {agent.display_name?.[0] || 'L'}
+                {activeAgent.display_name?.[0] || 'L'}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">{agent.display_name}</p>
-              <p className="text-xs text-[#8fa88f] truncate">{agent.role}</p>
+              <p className="text-sm font-medium truncate">{activeAgent.display_name}</p>
+              <p className="text-xs text-[#8fa88f] truncate">{activeAgent.role}</p>
             </div>
           </div>
           <div className="flex items-center gap-2 text-xs text-[#8fa88f]">
@@ -273,11 +274,19 @@ export default function LegalAdvisor() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Fallback Notification */}
+        {usingFallback && (
+          <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-center">
+            <p className="text-sm text-amber-800">
+              ⚠️ يتم استخدام وضع العرض التجريبي - الوكيل القانوني غير مسجل في قاعدة البيانات
+            </p>
+          </div>
+        )}
         {/* Header */}
         <header className="bg-white border-b border-[#e0dcd5] px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm" asChild className="text-[#5c4a3a]">
-              <Link to={`/agent/${agent.handle}`}>
+              <Link to={`/agent/${activeAgent.handle}`}>
                 <ArrowLeft className="h-4 w-4 ml-2" />
                 العودة
               </Link>
