@@ -359,8 +359,8 @@ export default function LegalAdvisor() {
   // Use fallback if no agent found
   const activeAgent = agent || fallbackAgent
 
-  // Export chat to file (moved after activeAgent)
-  const exportChat = useCallback((format: 'txt' | 'json') => {
+  // Export chat to file - regular function (not useCallback to avoid hooks order issues)
+  const exportChat = (format: 'txt' | 'json') => {
     const chatData = {
       agent: activeAgent,
       messages: messages,
@@ -393,10 +393,10 @@ export default function LegalAdvisor() {
       URL.revokeObjectURL(url)
     }
     toast.success(`تم تصدير المحادثة بصيغة ${format.toUpperCase()}`)
-  }, [messages, activeAgent, selectedDoc])
+  }
 
-  // Share consultation link (moved after activeAgent)
-  const shareConsultation = useCallback(() => {
+  // Share consultation link - regular function
+  const shareConsultation = () => {
     const shareUrl = `${window.location.origin}/legal/${agentId}?shared=true`
     navigator.clipboard.writeText(shareUrl)
     toast.success('تم نسخ رابط المشاركة', {
@@ -404,7 +404,7 @@ export default function LegalAdvisor() {
       icon: <Share2 className="h-4 w-4" />
     })
     setShareDialogOpen(false)
-  }, [agentId])
+  }
 
   // If we're using fallback, show a notification but still render the UI
   const usingFallback = !agent
