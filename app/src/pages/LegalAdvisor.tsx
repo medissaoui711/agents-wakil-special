@@ -563,7 +563,44 @@ export default function LegalAdvisor() {
           </div>
 
           {/* Chat Panel (Left - 3/12) */}
-          <div className="w-3/12 flex flex-col bg-white">
+          <div className="w-3/12 flex flex-col bg-white relative overflow-hidden">
+            
+            {/* Chat History Sidebar */}
+            <div className={`absolute inset-0 bg-white z-20 transition-transform duration-300 ${showHistory ? 'translate-x-0' : 'translate-x-full'}`}>
+              <div className="p-4 border-b border-[#e0dcd5] flex items-center justify-between bg-gradient-to-r from-[#faf8f5] to-white">
+                <h3 className="text-sm font-bold text-[#5c4a3a] flex items-center gap-2">
+                  <HistoryIcon className="h-4 w-4" />
+                  سجل المحادثات
+                </h3>
+                <button 
+                  onClick={() => setShowHistory(false)}
+                  className="p-1.5 text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5] rounded-lg transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </button>
+              </div>
+              <ScrollArea className="flex-1 p-3">
+                <div className="space-y-2">
+                  {/* Mock Chat History */}
+                  {[
+                    { title: 'استشارة عقد كراء', date: '2024-01-15', preview: 'ما مدى قانونية بند...' },
+                    { title: 'مراجعة عقد عمل', date: '2024-01-14', preview: 'هل يمكن إضافة شرط...' },
+                    { title: 'استفسار قانوني', date: '2024-01-13', preview: 'ما هي إجراءات التقاضي...' },
+                    { title: 'صياغة عقد تجاري', date: '2024-01-12', preview: 'أحتاج صياغة عقد...' },
+                  ].map((chat, idx) => (
+                    <button
+                      key={idx}
+                      className="w-full text-right p-3 bg-[#f5f3f0] hover:bg-[#ebe7e0] rounded-xl transition-all group"
+                    >
+                      <p className="text-sm font-medium text-[#5c4a3a] group-hover:text-[#4a3a2a]">{chat.title}</p>
+                      <p className="text-xs text-[#9a8a7a] mt-1 line-clamp-1">{chat.preview}</p>
+                      <p className="text-[10px] text-[#c4a574] mt-2">{chat.date}</p>
+                    </button>
+                  ))}
+                </div>
+              </ScrollArea>
+            </div>
+
             {/* Chat Header - Enhanced */}
             <div className="px-4 py-4 border-b border-[#e0dcd5] bg-gradient-to-r from-[#faf8f5] to-white">
               <div className="flex items-center justify-between">
