@@ -32,7 +32,8 @@ import {
   Sparkles,
   Lightbulb,
   FileEdit,
-  Info
+  Info,
+  Mic
 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { toast } from 'sonner'
@@ -893,16 +894,29 @@ export default function LegalAdvisor() {
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), handleSend())}
                     disabled={sending}
-                    className="min-h-[70px] resize-none text-sm border-[#d0ccc5] focus:border-[#c4a574] focus:ring-2 focus:ring-[#c4a574]/20 pr-10 rounded-xl shadow-sm"
+                    className="min-h-[70px] resize-none text-sm border-[#d0ccc5] focus:border-[#c4a574] focus:ring-2 focus:ring-[#c4a574]/20 pr-16 rounded-xl shadow-sm"
                     dir="rtl"
                   />
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="absolute left-2 top-2 p-1.5 text-[#9a8a7a] hover:text-[#5c4a3a] hover:bg-[#f5f3f0] rounded-lg transition-colors"
-                    title="رفع وثيقة"
-                  >
-                    <Upload className="h-4 w-4" />
-                  </button>
+                  <div className="absolute left-2 top-2 flex items-center gap-1">
+                    <button
+                      onClick={() => {
+                        toast.info('التعرف على الصوت', {
+                          description: 'انقر على الميكروفون وتحدث',
+                        })
+                      }}
+                      className="p-1.5 text-[#9a8a7a] hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                      title="إدخال صوتي"
+                    >
+                      <Mic className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="p-1.5 text-[#9a8a7a] hover:text-[#5c4a3a] hover:bg-[#f5f3f0] rounded-lg transition-colors"
+                      title="رفع وثيقة"
+                    >
+                      <Upload className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-1">
                   <Button 
