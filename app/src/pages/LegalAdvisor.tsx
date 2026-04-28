@@ -24,7 +24,9 @@ import {
   Bookmark,
   ChevronDown,
   FileUp,
-  ArrowLeft
+  ArrowLeft,
+  History as HistoryIcon,
+  MessageSquare
 } from 'lucide-react'
 import { api } from '@/lib/api'
 
@@ -72,6 +74,8 @@ const SIDEBAR_ITEMS = [
 
 export default function LegalAdvisor() {
   const { agentId } = useParams<{ agentId: string }>()
+  console.log('[LegalAdvisor] Rendering with agentId:', agentId)
+  
   const [agent, setAgent] = useState<Agent | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -85,18 +89,23 @@ export default function LegalAdvisor() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    console.log('[LegalAdvisor] Fetching agent:', agentId)
     const fetchAgent = async () => {
       try {
         const data = await api.getAgent(agentId as string)
+        console.log('[LegalAdvisor] Agent fetched:', data)
         setAgent(data)
       } catch (error) {
-        console.error('Failed to fetch agent:', error)
+        console.error('[LegalAdvisor] Failed to fetch agent:', error)
       } finally {
         setLoading(false)
       }
     }
     if (agentId) {
       fetchAgent()
+    } else {
+      console.log('[LegalAdvisor] No agentId provided')
+      setLoading(false)
     }
   }, [agentId])
 
@@ -555,7 +564,7 @@ export default function LegalAdvisor() {
                   حفظ
                 </Button>
                 <Button variant="ghost" size="sm" className="text-[10px] h-6 px-2 text-[#7a6a5a]">
-                  <History className="h-3 w-3 ml-1" />
+                  <HistoryIcon className="h-3 w-3 ml-1" />
                   السجل
                 </Button>
                 <Button variant="ghost" size="sm" className="text-[10px] h-6 px-2 text-[#7a6a5a]">
