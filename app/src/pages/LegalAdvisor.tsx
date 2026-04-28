@@ -402,17 +402,6 @@ export default function LegalAdvisor() {
   // If we're using fallback, show a notification but still render the UI
   const usingFallback = !agent
 
-  // Share consultation link
-  const shareConsultation = useCallback(() => {
-    const shareUrl = `${window.location.origin}/legal/${agentId}?shared=true`
-    navigator.clipboard.writeText(shareUrl)
-    toast.success('تم نسخ رابط المشاركة', {
-      description: 'يمكنك مشاركته الآن مع الآخرين',
-      icon: <Share2 className="h-4 w-4" />
-    })
-    setShareDialogOpen(false)
-  }, [agentId])
-
   return (
     <>
       <style>{customStyles}</style>
