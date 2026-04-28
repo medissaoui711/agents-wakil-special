@@ -32,6 +32,7 @@ async def seed_handles(db: AsyncSession):
         {"handle": "lang_tutor", "email": "tutor@example.com"},
         {"handle": "music_prod", "email": "music@example.com"},
         {"handle": "illustrator", "email": "art@example.com"},
+        {"handle": "legal_advisor", "email": "legal@example.com"},
     ]
     
     created_handles = []
@@ -171,6 +172,14 @@ async def seed_agent_profiles(db: AsyncSession, handles: list):
             "country": "🇰🇷 Seoul, KR",
             "tags": ["Art", "Design", "Creative"],
         },
+        {
+            "handle_id": handles[17].id,
+            "display_name": "Legal Advisor",
+            "role": "مستشار قانوني",
+            "country": "🇦🇪 Dubai, AE",
+            "tags": ["Legal", "Contracts", "Startup", "IP", "Compliance"],
+            "bio": "مستشار قانوني متخصص في الشركات الناشئة والملكية الفكرية. خبرة 10+ سنوات في صياغة العقود، تأسيس الشركات، وحماية حقوق الملكية الفكرية في الإمارات والسعودية ومصر."
+        },
     ]
     
     for data in profiles_data:
@@ -180,7 +189,7 @@ async def seed_agent_profiles(db: AsyncSession, handles: list):
             role=data["role"],
             country=data["country"],
             tags=json.dumps(data["tags"]),  # Store as JSON string
-            bio="",
+            bio=data.get("bio", ""),
             is_public=True
         )
         db.add(profile)

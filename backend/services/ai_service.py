@@ -39,12 +39,14 @@ class AIService:
         # Define complementary roles
         complementary = {
             'vc': ['startup', 'founder', 'ceo', 'entrepreneur'],
-            'startup': ['vc', 'angel', 'investor'],
-            'founder': ['vc', 'mentor', 'advisor'],
+            'startup': ['vc', 'angel', 'investor', 'legal'],
+            'founder': ['vc', 'mentor', 'advisor', 'legal'],
             'developer': ['product', 'designer', 'pm'],
             'designer': ['developer', 'product'],
             'mentor': ['founder', 'startup', 'junior'],
             'ai/ml': ['data', 'engineer', 'researcher'],
+            'legal': ['startup', 'founder', 'ceo', 'enterprise', 'contract'],
+            'lawyer': ['startup', 'founder', 'company', 'business'],
         }
         
         role_score = 0
@@ -216,6 +218,58 @@ class AIService:
             ]
             return random.choice(mentor_responses)
         
+        # Legal Advisor patterns - المستشار القانوني
+        if any(r in role for r in ['legal', 'lawyer', 'attorney', 'مستشار قانوني', 'محامي']) or \
+           any(t in tags for t in ['legal', 'law', 'قانون', 'عقود', 'contracts']):
+            
+            # Legal consultation patterns
+            if any(word in message_lower for word in ['عقد', 'contract', 'اتفاقية', 'agreement']):
+                contract_responses = [
+                    "صياغة العقود تحتاج إلى دقة. هل يمكنك مشاركة نوع العقد المطلوب؟",
+                    "أنصح بمراجعة بنود المسؤولية والتعويض في أي عقد.",
+                    "هل تحتاج إلى عقد قياسي أم تخصيص لحالة محددة؟",
+                    "يمكنني مراجعة العقد وإضافة شروط حماية لمصالحك."
+                ]
+                return random.choice(contract_responses)
+            
+            if any(word in message_lower for word in ['company', 'شركة', 'تأسيس', 'incorporation']):
+                company_responses = [
+                    "تأسيس الشركة يختلف حسب نوعها (LLC, Ltd, etc). ما نوع الشركة المقترح؟",
+                    "أنصح بالتفكير في هيكل الملكية واتفاقية المساهمين من البداية.",
+                    "ما الدولة التي تخطط للتأسيس فيها؟ التشريعات تختلف.",
+                    "هل تحتاج إلى مساعدة في إعداد مستندات التأسيس؟"
+                ]
+                return random.choice(company_responses)
+            
+            if any(word in message_lower for word in ['ip', 'property', 'ملكية فكرية', 'براءة']):
+                ip_responses = [
+                    "حماية الملكية الفكرية ضرورية للشركات التقنية. هل سجّلت براءات الاختراع؟",
+                    "أنصح بتسجيل العلامة التجارية في الأسواق المستهدفة مبكراً.",
+                    "هل لديك NDA مع الفريق والشركاء قبل مشاركة الأفكار؟",
+                    "يمكنني مراجعة اتفاقيات نقل الملكية الفكرية للموظفين."
+                ]
+                return random.choice(ip_responses)
+            
+            if any(word in message_lower for word in ['dispute', 'نزاع', 'قضية', 'litigation']):
+                dispute_responses = [
+                    "حل النزاعات ودياً أسرع وأقل تكلفة من التقاضي. هل جربت الوساطة؟",
+                    "أحتاج إلى فهم تفاصيل القضية لإعطاء رأي قانوني دقيق.",
+                    "ما المرحلة التي وصلت إليها القضية حالياً؟",
+                    "أنصح بالاحتفاظ بجميع المستندات والمراسلات المتعلقة بالنزاع."
+                ]
+                return random.choice(dispute_responses)
+            
+            # General legal responses
+            legal_responses = [
+                "كـمستشار قانوني، أنصح دائماً بتوثيق جميع الاتفاقيات خطياً.",
+                "التزام القانون المحلي والدولي مهم لنجاح أي مشروع.",
+                "هل يمكنك إعطائي المزيد من التفاصيل حول الموقف القانوني؟",
+                "أنصح بالاستشارة القانونية المبكرة لتجنب المشاكل المستقبلية.",
+                "الامتثال الضريبي والتنظيمي أساسي لاستمرارية الشركات.",
+                "يمكنني مساعدتك في مراجعة الوثائق القانونية وإعداد المستندات."
+            ]
+            return random.choice(legal_responses)
+        
         # Default contextual responses
         default_responses = [
             f"هذا موضوع مثير للاهتمام! أنا {role if role else 'متخصص في مجالي'} ويمكنني المساعدة.",
@@ -249,7 +303,9 @@ class AIService:
             'تعاون': ['collaborate', 'partner', 'cooperate', 'join'],
             'تقنية': ['tech', 'ai', 'ml', 'code', 'develop'],
             'تسويق': ['marketing', 'growth', 'sales'],
-            'استشارة': ['advice', 'mentor', 'help', 'guide']
+            'استشارة': ['advice', 'mentor', 'help', 'guide'],
+            'قانونية': ['legal', 'law', 'contract', 'agreement', 'company'],
+            'ملكية فكرية': ['ip', 'intellectual', 'patent', 'trademark']
         }
         
         for topic, keywords in topic_keywords.items():

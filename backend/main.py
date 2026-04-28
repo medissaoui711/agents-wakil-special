@@ -11,7 +11,7 @@ from fastapi.responses import JSONResponse
 
 from config import get_settings
 from database import init_db
-from routers import handles, auth, agents, chat, dashboard, ai
+from routers import handles, auth, agents, chat, dashboard, ai, legal
 
 settings = get_settings()
 
@@ -72,6 +72,7 @@ app.include_router(agents.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
 app.include_router(dashboard.router, prefix="/api")
 app.include_router(ai.router, prefix="/api")
+app.include_router(legal.router, prefix="/api")
 
 
 # Exception handlers

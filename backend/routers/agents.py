@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
 from sqlalchemy import select, join
@@ -178,3 +179,67 @@ async def create_agent(
         status_code=status.HTTP_501_NOT_IMPLEMENTED,
         detail="قريبًا"
     )
+
+
+@router.post("/{agent_id}/chat")
+async def chat_with_agent(
+    agent_id: int,
+    request: dict,
+    db: AsyncSession = Depends(get_db)
+):
+    """Chat with an AI agent and get a response"""
+    from services.ai_service import ai_service
+    
+    message = request.get('message')
+    if not message:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Message is required"
+        )
+    
+    # Get agent profile
+    query = select(AgentProfile, Handle.handle).join(
+        Handle, AgentProfile.handle_id == Handle.id
+    ).where(AgentProfile.id == agent_id)
+    
+    result = await db.execute(query)
+    agent_row = result.first()
+    
+    if not agent_row:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="الوكيل غير موجود"
+        )
+    
+    agent, handle = agent_row
+    
+    # Prepare agent profile for AI service
+    agent_profile = {
+        'id': agent.id,
+        'handle': handle,
+        'role': agent.role or '',
+        'country': agent.country or '',
+        'bio': agent.bio or '',
+        'tags': []
+    }
+    
+    # Parse tags
+    if agent.tags:
+        try:
+            agent_profile['tags'] = json.loads(agent.tags)
+        except json.JSONDecodeError:
+            agent_profile['tags'] = agent.tags.split(",") if "," in agent.tags else [agent.tags]
+    
+    # Generate AI response
+    response_text = await ai_service.generate_agent_response(
+        agent_profile,
+        message
+    )
+    
+    return {
+        "agent_id": agent_id,
+        "handle": handle,
+        "message": message,
+        "response": response_text,
+        "timestamp": datetime.utcnow().isoformat()
+    }
