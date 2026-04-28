@@ -18,6 +18,7 @@ import {
   User,
   Upload,
   ChevronRight,
+  ChevronLeft,
   FileCheck,
   AlertCircle,
   Settings,
@@ -26,7 +27,11 @@ import {
   FileUp,
   ArrowLeft,
   History as HistoryIcon,
-  MessageSquare
+  MessageSquare,
+  Copy,
+  Sparkles,
+  Lightbulb,
+  FileEdit
 } from 'lucide-react'
 import { api } from '@/lib/api'
 
@@ -501,76 +506,174 @@ export default function LegalAdvisor() {
             {/* Messages */}
             <ScrollArea className="flex-1 p-3">
               <div className="space-y-3">
-                {messages.length === 0 ? (
+                {messages.length === 0 && !sending ? (
                   <div className="text-center py-8">
-                    <p className="text-sm text-[#7a6a5a] mb-4">كيف يمكنني مساعدتك في هذا العقد؟</p>
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#5c4a3a] to-[#7a6a5a] rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
+                      <Bot className="h-8 w-8 text-white" />
+                    </div>
+                    <p className="text-sm text-[#7a6a5a] mb-4 font-medium">كيف يمكنني مساعدتك في هذا العقد؟</p>
                     <div className="space-y-2">
                       {['ما مدى قانونية بند الزيادة السنوية؟', 'هل يمكن تعديل مدة العقد؟', 'ما حقوق المكتري في حال الإخلاء؟'].map((q, i) => (
                         <button
                           key={i}
                           onClick={() => setInput(q)}
-                          className="block w-full text-right px-3 py-2 text-xs text-[#5c4a3a] bg-[#f5f3f0] rounded-lg hover:bg-[#ebe7e0] transition-colors"
+                          className="block w-full text-right px-4 py-3 text-xs text-[#5c4a3a] bg-white border border-[#e0dcd5] rounded-xl hover:bg-[#f5f3f0] hover:border-[#c4a574] transition-all duration-200 shadow-sm hover:shadow-md group"
                         >
-                          {q}
+                          <span className="group-hover:translate-x-1 transition-transform inline-block">{q}</span>
+                          <ChevronLeft className="h-3 w-3 inline-block mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                       ))}
                     </div>
                   </div>
                 ) : (
-                  messages.map((m) => (
-                    <div key={m.id} className={`flex gap-2 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                      <Avatar className="h-6 w-6 shrink-0">
-                        <AvatarFallback className={m.role === 'user' ? 'bg-[#d0ccc5]' : 'bg-[#5c4a3a] text-white text-[10px]'}>
-                          {m.role === 'user' ? <User className="h-3 w-3" /> : <Scale className="h-3 w-3" />}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className={`rounded-lg px-3 py-2 max-w-[90%] text-sm ${
-                        m.role === 'user' ? 'bg-[#5c4a3a] text-white' : 'bg-[#f5f3f0] text-[#4a3a2a]'
-                      }`}>
-                        {m.content}
+                  <>
+                    {messages.map((m, index) => (
+                      <div 
+                        key={m.id} 
+                        className={`flex gap-3 ${m.role === 'user' ? 'flex-row-reverse' : ''} animate-fadeIn`}
+                        style={{ animationDelay: `${index * 50}ms` }}
+                      >
+                        <Avatar className="h-8 w-8 shrink-0 shadow-sm">
+                          <AvatarFallback className={`${m.role === 'user' ? 'bg-[#d0ccc5]' : 'bg-gradient-to-br from-[#5c4a3a] to-[#7a6a5a] text-white'} text-[10px]`}>
+                            {m.role === 'user' ? <User className="h-4 w-4" /> : <Scale className="h-4 w-4" />}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className={`group relative max-w-[85%] ${m.role === 'user' ? 'ml-auto' : 'mr-auto'}`}>
+                          <div className={`rounded-2xl px-4 py-3 text-sm shadow-sm transition-shadow hover:shadow-md ${
+                            m.role === 'user' 
+                              ? 'bg-gradient-to-br from-[#5c4a3a] to-[#4a3a2a] text-white rounded-tr-sm' 
+                              : 'bg-white text-[#4a3a2a] rounded-tl-sm border border-[#e8e4df]'
+                          }`}>
+                            <p className="leading-relaxed whitespace-pre-wrap">{m.content}</p>
+                            
+                            {/* Message Actions */}
+                            <div className={`flex items-center gap-1 mt-2 pt-2 border-t ${m.role === 'user' ? 'border-white/20' : 'border-[#e8e4df]'} opacity-0 group-hover:opacity-100 transition-opacity`}>
+                              <button 
+                                onClick={() => navigator.clipboard.writeText(m.content)}
+                                className={`p-1.5 rounded-lg ${m.role === 'user' ? 'hover:bg-white/20' : 'hover:bg-[#f5f3f0]'} transition-colors`}
+                                title="نسخ"
+                              >
+                                <Copy className="h-3 w-3" />
+                              </button>
+                              <button 
+                                className={`p-1.5 rounded-lg ${m.role === 'user' ? 'hover:bg-white/20' : 'hover:bg-[#f5f3f0]'} transition-colors`}
+                                title="حفظ"
+                              >
+                                <Bookmark className="h-3 w-3" />
+                              </button>
+                              <span className={`text-[10px] mr-auto ${m.role === 'user' ? 'text-white/60' : 'text-[#9a8a7a]'}`}>
+                                {new Date(m.created_at).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    ))}
+                    
+                    {/* Typing Indicator */}
+                    {sending && (
+                      <div className="flex gap-3 animate-fadeIn">
+                        <Avatar className="h-8 w-8 shrink-0 shadow-sm">
+                          <AvatarFallback className="bg-gradient-to-br from-[#5c4a3a] to-[#7a6a5a] text-white text-[10px]">
+                            <Scale className="h-4 w-4" />
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="bg-white rounded-2xl rounded-tl-sm border border-[#e8e4df] px-4 py-3 shadow-sm">
+                          <div className="flex items-center gap-1">
+                            <span className="w-2 h-2 bg-[#5c4a3a] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                            <span className="w-2 h-2 bg-[#5c4a3a] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                            <span className="w-2 h-2 bg-[#5c4a3a] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
                 <div ref={messagesEndRef} />
               </div>
             </ScrollArea>
 
             {/* Input */}
-            <div className="p-3 border-t border-[#e0dcd5]">
+            <div className="p-3 border-t border-[#e0dcd5] bg-gradient-to-b from-white to-[#faf8f5]">
+              {/* Quick Actions */}
+              {messages.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-3">
+                  <button
+                    onClick={() => setInput('صياغة عقد جديد')}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-[#5c4a3a]/10 hover:bg-[#5c4a3a]/20 text-[#5c4a3a] rounded-full text-[11px] font-medium transition-colors"
+                  >
+                    <FileEdit className="h-3 w-3" />
+                    صياغة عقد
+                  </button>
+                  <button
+                    onClick={() => setInput('تحليل قانوني للمخاطر')}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-full text-[11px] font-medium transition-colors"
+                  >
+                    <AlertCircle className="h-3 w-3" />
+                    تحليل المخاطر
+                  </button>
+                  <button
+                    onClick={() => setInput('اقتراحات تحسين العقد')}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full text-[11px] font-medium transition-colors"
+                  >
+                    <Lightbulb className="h-3 w-3" />
+                    اقتراحات
+                  </button>
+                  <button
+                    onClick={() => setInput('المراجع القانونية')}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-full text-[11px] font-medium transition-colors"
+                  >
+                    <Sparkles className="h-3 w-3" />
+                    مراجع قانونية
+                  </button>
+                </div>
+              )}
+              
               <div className="flex gap-2">
-                <Textarea
-                  placeholder="سؤال قانوني..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), handleSend())}
-                  disabled={sending}
-                  className="flex-1 min-h-[60px] resize-none text-sm border-[#d0ccc5] focus:border-[#c4a574]"
-                  dir="rtl"
-                />
+                <div className="flex-1 relative">
+                  <Textarea
+                    placeholder="سؤال قانوني..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), handleSend())}
+                    disabled={sending}
+                    className="min-h-[70px] resize-none text-sm border-[#d0ccc5] focus:border-[#c4a574] focus:ring-2 focus:ring-[#c4a574]/20 pr-10 rounded-xl shadow-sm"
+                    dir="rtl"
+                  />
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="absolute left-2 top-2 p-1.5 text-[#9a8a7a] hover:text-[#5c4a3a] hover:bg-[#f5f3f0] rounded-lg transition-colors"
+                    title="رفع وثيقة"
+                  >
+                    <Upload className="h-4 w-4" />
+                  </button>
+                </div>
                 <div className="flex flex-col gap-1">
-                  <Button onClick={handleSend} disabled={!input.trim() || sending} className="bg-[#5c4a3a] hover:bg-[#4a3a2a] h-8 px-2">
-                    <Send className="h-3 w-3" />
-                  </Button>
-                  <Button variant="outline" size="icon" onClick={() => fileInputRef.current?.click()} className="h-8 w-8 border-[#d0ccc5]">
-                    <Upload className="h-3 w-3" />
+                  <Button 
+                    onClick={handleSend} 
+                    disabled={!input.trim() || sending} 
+                    className="bg-gradient-to-br from-[#5c4a3a] to-[#4a3a2a] hover:from-[#4a3a2a] hover:to-[#3d2d1d] h-10 px-3 shadow-md hover:shadow-lg transition-all rounded-xl"
+                  >
+                    <Send className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
               
-              <div className="flex gap-1 mt-2">
-                <Button variant="ghost" size="sm" className="text-[10px] h-6 px-2 text-[#7a6a5a]">
-                  <Bookmark className="h-3 w-3 ml-1" />
-                  حفظ
-                </Button>
-                <Button variant="ghost" size="sm" className="text-[10px] h-6 px-2 text-[#7a6a5a]">
-                  <HistoryIcon className="h-3 w-3 ml-1" />
-                  السجل
-                </Button>
-                <Button variant="ghost" size="sm" className="text-[10px] h-6 px-2 text-[#7a6a5a]">
-                  <FileCheck className="h-3 w-3 ml-1" />
-                  صياغة
-                </Button>
+              {/* Bottom Actions */}
+              <div className="flex items-center justify-between mt-3">
+                <div className="flex gap-1">
+                  <Button variant="ghost" size="sm" className="text-[10px] h-7 px-2 text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5]">
+                    <Bookmark className="h-3 w-3 ml-1" />
+                    حفظ المحادثة
+                  </Button>
+                  <Button variant="ghost" size="sm" className="text-[10px] h-7 px-2 text-[#7a6a5a] hover:text-[#5c4a3a] hover:bg-[#f0ebe5]">
+                    <HistoryIcon className="h-3 w-3 ml-1" />
+                    السجل
+                  </Button>
+                </div>
+                <span className="text-[10px] text-[#9a8a7a]">
+                  Enter للإرسال
+                </span>
               </div>
             </div>
           </div>
