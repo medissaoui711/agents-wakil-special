@@ -86,30 +86,18 @@ export default function LegalAdvisor() {
 
   useEffect(() => {
     const fetchAgent = async () => {
-      console.log('[LegalAdvisor] Fetching agent:', agentId)
       try {
-        const response = await api.get(`/agents/${agentId}`)
-        console.log('[LegalAdvisor] Agent fetched:', response.data)
-        setAgent(response.data)
+        const data = await api.getAgent(agentId as string)
+        setAgent(data)
       } catch (error) {
-        console.error('[LegalAdvisor] Failed to fetch agent:', error)
+        console.error('Failed to fetch agent:', error)
       } finally {
-        console.log('[LegalAdvisor] Setting loading to false')
         setLoading(false)
       }
     }
-    
-    // Timeout fallback in case API hangs
-    const timeoutId = setTimeout(() => {
-      if (loading) {
-        console.log('[LegalAdvisor] Timeout - forcing loading false')
-        setLoading(false)
-      }
-    }, 3000)
-    
-    fetchAgent()
-    
-    return () => clearTimeout(timeoutId)
+    if (agentId) {
+      fetchAgent()
+    }
   }, [agentId])
 
   useEffect(() => {
@@ -128,11 +116,12 @@ export default function LegalAdvisor() {
     setInput('')
     setSending(true)
     try {
-      const response = await api.post(`/agents/${agentId}/chat`, { message: input })
+      const history = messages.map(m => ({ role: m.role, content: m.content }))
+      const response = await api.generateAIResponse(Number(agentId), input, history)
       const assistantMessage: Message = {
         id: Date.now() + 1,
         role: 'assistant',
-        content: response.data.response,
+        content: response.response,
         created_at: new Date().toISOString()
       }
       setMessages(prev => [...prev, assistantMessage])
